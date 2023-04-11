@@ -1,0 +1,22 @@
+name: "Github setup node cache test"
+on:
+  workflow_dispatch:
+
+jobs:
+  job_install_dependencies:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+          cache-dependency-path: yarn-lock.json
